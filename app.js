@@ -1,16 +1,17 @@
 
 const qwerty = document.querySelector('#qwerty')
-const phrase = document.querySelector('#phrase')
+const phrase = document.querySelector('#phrase').querySelector('ul')
 const reset = document.querySelector('.btn__reset')
+
 
 let missed = 0
 
 const phrases = [
-    "phrase 1",
-    "phrase 2",
-    "phrase 3",
-    "phrase 4",
-    "phrase 5"
+    "phrase one",
+    "phrase two",
+    "phrase three",
+    "phrase four",
+    "phrase five"
 ]
 
 reset.addEventListener('click', () => {
@@ -29,22 +30,33 @@ const getRandomPhraseAsArray = () => {
     //
 }
 
+//convert the random phrase to a collection of strings, store the collection in a variable
+const phraseToGuess = [...getRandomPhraseAsArray()]
+
 const addPhraseToDisplay = () => {
-    // ❏ Create a list li item
-    const li = document.createElement('li')
-    // ❏ Put the character inside of the list item
-    li.textContent = getRandomPhraseAsArray()
-    // ❏ Append that list item to the #phrase ul in your HTML
-    phrase.appendChild(li)
-    // ❏ If the character in the array is a letter and not a space, the
-    // function should add the class “letter” to the list item. If not, add the “space” class.
+        // create a for loop that loops through the phrase and adds each character as an <li> element
+        for (i = 0; i < phraseToGuess.length; i++) {
+            const li = document.createElement('LI')
+            li.textContent = (phraseToGuess[i])
+            // if li is not equal to the string ' ' add class 'space'
+            if (li.textContent === ' '){
+                li.classList.add('space')
+            }
+            // if else add class 'letter'
+            else{
+                li.classList.add('letter')
+            }
+            // append list item containing letter or space to the Ul
+            phrase.appendChild(li)
+        }
 }
 
-addPhraseToDisplay()
+//pass the phrase to addPhraseToDisplay to generate li items
+addPhraseToDisplay(phraseToGuess)
 
-const checkLetter = () => {
+// const checkLetter = () => {
 
-}
+// }
 
 
     
