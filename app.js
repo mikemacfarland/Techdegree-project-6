@@ -2,7 +2,7 @@
 const qwerty = document.querySelector('#qwerty')
 const phrase = document.querySelector('#phrase').querySelector('ul')
 const reset = document.querySelector('.btn__reset')
-
+const scoreboard = document.getElementById('scoreboard')
 
 let missed = 0
 
@@ -54,11 +54,24 @@ const addPhraseToDisplay = () => {
 //pass the phrase to addPhraseToDisplay to generate li items
 addPhraseToDisplay(phraseToGuess)
 
-// const checkLetter = () => {
+const checkLetter = qwerty.addEventListener('click', (e) => {
+    const letterButtons = document.querySelector('.keyrow').querySelectorAll('li')
+    let match = null
+    const li = phrase.querySelectorAll('li')
+    let tries = scoreboard.firstElementChild.children
+    for (i = 0; i < li.length; i++){
+        if (e.target.textContent === li[i].textContent && 'BUTTON' && e.target.classlist !== "chosen"){
+            li[i].classList.add("show")
+            e.target.className = "chosen"
+            match = e.target.textContent
+            }
+            else if (match === null) {
+                console.log(tries[0])
+                console.log(match)
+                
+        }
+    }
+})
 
-// }
-
-
-    
 
 
