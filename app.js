@@ -2,16 +2,16 @@
 const qwerty = document.querySelector('#qwerty')
 const phrase = document.querySelector('#phrase').querySelector('ul')
 const reset = document.querySelector('.btn__reset')
-const scoreboard = document.getElementById('scoreboard')
+const scoreBoard = document.getElementById('scoreboard').firstElementChild
 
 let missed = 0
 
 const phrases = [
-    "phrase one",
-    "phrase two",
-    "phrase three",
-    "phrase four",
-    "phrase five"
+    "fhrase one",
+    "fhrase two",
+    "fhrase three",
+    "fhrase four",
+    "fhrase five"
 ]
 
 reset.addEventListener('click', () => {
@@ -55,23 +55,42 @@ const addPhraseToDisplay = () => {
 addPhraseToDisplay(phraseToGuess)
 
 const checkLetter = qwerty.addEventListener('click', (e) => {
-    const letterButtons = document.querySelector('.keyrow').querySelectorAll('li')
+    const letterButtons = document.querySelector('.keyrow').getElementsByTagName('li')
     let match = null
-    const li = phrase.querySelectorAll('li')
-    let tries = scoreboard.firstElementChild.children
-    for (i = 0; i < li.length; i++){
-        if (e.target.textContent === li[i].textContent && 'BUTTON' && e.target.classlist !== "chosen"){
+    let li = phrase.getElementsByTagName('li')
+    let tries = scoreboard
+    for (let i = 0; i < li.length; i++){
+        //if isnt looping into second word... fix this
+        if (e.target.textContent === li[i].textContent && (e.target.className !== "chosen" || "letter")){
             li[i].classList.add("show")
             e.target.className = "chosen"
             match = e.target.textContent
-            }
-            else if (match === null) {
-                console.log(tries[0])
-                console.log(match)
-                
+            //console.log(match)
+        }}
+        // this if needed to be out of the previous statement because it would run when the loop was running through the first if statement
+        if (match === null && e.target.tagName === "BUTTON" && e.target.className !== "chosen") {
+            e.target.className = "chosen"
+            missed += 1
+            scoreBoard.firstElementChild.remove()
+            //console.log(missed)
         }
+        else {
+            return console.log(match)
+        }
+        
     }
-})
+)
 
 
 
+
+/// for win ------------------
+
+// let correctGuesses = document.getElementsByClassName('show')
+// let LettersInPhrase = document.getElementsByClassName('letter')
+
+// const win = () => {
+//     if (correctGuesses === LettersInPhrase) {
+//         document.getElementById('overlay').classList.add('win')
+//     }
+// }
