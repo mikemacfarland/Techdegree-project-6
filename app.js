@@ -3,15 +3,18 @@ const qwerty = document.querySelector('#qwerty')
 const phrase = document.querySelector('#phrase').querySelector('ul')
 const reset = document.querySelector('.btn__reset')
 const scoreBoard = document.getElementById('scoreboard').firstElementChild
+const overlay = document.getElementById('overlay')
 
+let correctGuesses = document.getElementsByClassName('show')
+let LettersInPhrase = document.getElementsByClassName('letter')
 let missed = 0
 
 const phrases = [
-    "fhrase one",
-    "fhrase two",
-    "fhrase three",
-    "fhrase four",
-    "fhrase five"
+    "im old gregg",
+    "you know me",
+    "youve seen me",
+    "baileys in a shoe",
+    "scaly man fish"
 ]
 
 reset.addEventListener('click', () => {
@@ -55,42 +58,51 @@ const addPhraseToDisplay = () => {
 addPhraseToDisplay(phraseToGuess)
 
 const checkLetter = qwerty.addEventListener('click', (e) => {
-    const letterButtons = document.querySelector('.keyrow').getElementsByTagName('li')
     let match = null
     let li = phrase.getElementsByTagName('li')
     let tries = scoreboard
     for (let i = 0; i < li.length; i++){
-        //if isnt looping into second word... fix this
+        // for loop isnt reaching 2nd letter of same type ------
         if (e.target.textContent === li[i].textContent && (e.target.className !== "chosen" || "letter")){
             li[i].classList.add("show")
             e.target.className = "chosen"
             match = e.target.textContent
-            //console.log(match)
+            checkWin()
         }}
-        // this if needed to be out of the previous statement because it would run when the loop was running through the first if statement
         if (match === null && e.target.tagName === "BUTTON" && e.target.className !== "chosen") {
             e.target.className = "chosen"
             missed += 1
             scoreBoard.firstElementChild.remove()
-            //console.log(missed)
+            checkWin()
         }
         else {
-            return console.log(match)
+            return
         }
         
     }
 )
 
+const checkWin = () => {
+    title = document.querySelector('.title')
+    if (correctGuesses.length === LettersInPhrase.length) {
+        overlay.classList.add("win")
+        title.textContent = "WIN!"
+        reset.textContent = "Play Again"
+        setTimeout(() => {overlay.style.display = 'flex'},1500)
+        
+        reset.addEventListener('click', (e) => {
+            location.reload()
+        })
 
+    }
+    if (missed > 4) {
+        overlay.classList.add("lose")
+        title.textContent = "LOSE!"
+        reset.textContent = "Play Again"
+        setTimeout(() => {overlay.style.display = 'flex'},1500)
+        reset.addEventListener('click', (e) => {
+            location.reload()
+        })
+    }
+}
 
-
-/// for win ------------------
-
-// let correctGuesses = document.getElementsByClassName('show')
-// let LettersInPhrase = document.getElementsByClassName('letter')
-
-// const win = () => {
-//     if (correctGuesses === LettersInPhrase) {
-//         document.getElementById('overlay').classList.add('win')
-//     }
-// }
