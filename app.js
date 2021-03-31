@@ -66,11 +66,13 @@ const checkLetter = qwerty.addEventListener('click', (e) => {
         if (e.target.textContent === li[i].textContent && (e.target.className !== "chosen" || "letter")){
             li[i].classList.add("show")
             e.target.className = "chosen"
+            e.target.disabled = true
             match = e.target.textContent
             checkWin()
         }}
         if (match === null && e.target.tagName === "BUTTON" && e.target.className !== "chosen") {
             e.target.className = "chosen"
+            e.target.disabled = true
             missed += 1
             scoreBoard.firstElementChild.remove()
             checkWin()
@@ -105,4 +107,3 @@ const checkWin = () => {
         })
     }
 }
-
